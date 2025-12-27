@@ -240,10 +240,10 @@ const App: React.FC = () => {
             <div className="w-full md:w-[400px] p-6 md:p-12 flex flex-col justify-between overflow-y-auto bg-inherit">
               <div>
                 <button onClick={() => setSelectedArt(null)} className="hidden md:block mb-12 typewriter text-xs opacity-50 hover:opacity-100 transition-opacity">← Back to Gallery</button>
-                <h2 className={`handwriting text-5xl md:text-6xl mb-6 ${isDark ? 'text-blue-100' : 'text-blue-950'}`}>{selectedArt.title}</h2>
-                <p className={`typewriter text-sm leading-relaxed mb-8 opacity-80 ${isDark ? 'text-slate-400' : 'text-slate-700'}`}>{selectedArt.desc}</p>
+                <h2 className={`handwriting text-5xl md:text-6xl ${isDark ? 'text-blue-100' : 'text-blue-950'}`}>{selectedArt.title}</h2>
+                <p className={`typewriter text-sm leading-relaxed mb-8 opacity-50 ${isDark ? 'text-slate-400' : 'text-slate-700'}`}>{selectedArt.desc}</p>
                 <div className="space-y-4">
-                  <h4 className="typewriter text-[10px] uppercase tracking-widest border-b border-gray-100/10 pb-2 opacity-50">Technical Specs</h4>
+                  <h4 className="typewriter text-[10px] uppercase tracking-widest border-b border-gray-100/10 opacity-100">Technical Specs</h4>
                   <ul className="space-y-2">
                     {selectedArt.specs.map(s => <li key={s} className="typewriter text-[9px] uppercase opacity-60 tracking-wider flex items-center gap-2"><span className="w-1 h-1 bg-current rounded-full"/> {s}</li>)}
                   </ul>
