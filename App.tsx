@@ -229,15 +229,15 @@ const App: React.FC = () => {
 
       {/* Detail Modal */}
       {selectedArt && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 md:p-12">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-12">
           <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-2xl" onClick={() => setSelectedArt(null)} />
           <div className={`relative w-full max-w-6xl h-full md:h-auto md:min-h-[600px] flex flex-col md:flex-row shadow-2xl overflow-hidden rounded-sm modal-enter-active ${isDark ? 'bg-slate-900' : 'bg-white'}`}>
-            <div className={`flex-1 flex items-center justify-center overflow-hidden relative group ${isDark ? 'bg-black p-12' : 'bg-transparent p-0'}`}>
-              <div className="scale-100 md:scale-125 transform transition-transform duration-1000 group-hover:scale-[1.3] group-hover:rotate-1">
+            <div className={`flex-1 flex items-center justify-center overflow-hidden relative ${isDark ? 'bg-black p-0 md:p-12' : 'bg-transparent p-0'}`}>
+              <div className="scale-100 md:scale-125 transform transition-transform duration-1000">
                 {selectedArt.component}
               </div>
             </div>
-            <div className="w-full md:w-[400px] p-8 md:p-12 flex flex-col justify-between overflow-y-auto max-h-[40vh] md:max-h-full bg-inherit">
+            <div className="w-full md:w-[400px] p-6 md:p-12 flex flex-col justify-between overflow-y-auto max-h-[30vh] md:max-h-full bg-inherit">
               <div>
                 <button onClick={() => setSelectedArt(null)} className="hidden md:block mb-12 typewriter text-xs opacity-50 hover:opacity-100 transition-opacity">← Back to Gallery</button>
                 <h2 className={`handwriting text-5xl md:text-6xl mb-6 ${isDark ? 'text-blue-100' : 'text-blue-950'}`}>{selectedArt.title}</h2>
@@ -263,7 +263,7 @@ const App: React.FC = () => {
         <p className="typewriter text-[8px] uppercase tracking-[1em] mb-8 opacity-40">Hand-coded &bull; Procedural &bull; Eternal</p>
         
         {/* Social Links */}
-        <div className="flex flex-wrap justify-center gap-4 md:gap-8 px-4">
+        <div className="flex flex-wrap justify-center gap-6 md:gap-8 px-4">
             <SocialLink href="https://wildsalt.me/" label="Wild Salt">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
             </SocialLink>
