@@ -46,7 +46,6 @@ import VoidBloom from './components/sketches/VoidBloom';
 import MoltenCore from './components/sketches/MoltenCore';
 import FractalCoast from './components/sketches/FractalCoast';
 import GlitchGarden from './components/sketches/GlitchGarden';
-import CssAttachment from './components/sketches/CssAttachment';
 
 // --- Types ---
 interface Artwork {
@@ -67,7 +66,7 @@ interface SeriesConfig {
 }
 
 // --- Animation Components ---
-const Reveal = ({ children, delay = 0 }: { children: React.ReactNode, delay?: number }) => {
+const Reveal = ({ children, delay = 0 }: { children?: React.ReactNode, delay?: number }) => {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -104,7 +103,7 @@ const App: React.FC = () => {
 
   const allArt: Artwork[] = [
     // Series 4
-    { id: 0, title: "The Attachment", desc: "Pure CSS Iconography.", component: <CssAttachment />, specs: ["Clip-path Geometry", "Linear Gradients", "Box Model"] },
+    { id: 0, title: "Nebula Loom", desc: "Cosmic web generation.", component: <NebulaLoom />, specs: ["Radial Gradients", "Conic Gradients", "CSS Blending"] },
     { id: 1, title: "Caustic Depths", desc: "Underwater light simulation.", component: <CausticDepths />, specs: ["Overlay Gradients", "CSS Masking", "Procedural Caustics"] },
     { id: 2, title: "Cyber Zen", desc: "Neon minimalism.", component: <CyberZen />, specs: ["Neon Effects", "Carbon Wash", "Geometric Contrast"] },
     { id: 3, title: "Petal Storm", desc: "Dynamic pointillism.", component: <PetalStorm />, specs: ["400 Particles", "Transform-GPU", "Chaos Theory"] },
@@ -180,12 +179,12 @@ const App: React.FC = () => {
             </div>
             <span className="handwriting text-3xl font-bold tracking-tighter">Ink Folio</span>
           </div>
-          <div className="hidden lg:flex items-center gap-12 typewriter text-[9px] uppercase tracking-[0.4em] opacity-50">
+          <div className={`hidden lg:flex items-center gap-12 typewriter text-[9px] uppercase tracking-[0.4em] font-bold ${isDark ? 'text-blue-200/80' : 'text-blue-900/80'}`}>
             {series.map(s => (
-              <a key={s.id} href={`#${s.id}`} className="hover:opacity-100 hover:text-blue-500 transition-all">{s.title.split(' ')[1]}</a>
+              <a key={s.id} href={`#${s.id}`} className="hover:text-blue-500 transition-all">{s.title.split(' ')[1]}</a>
             ))}
           </div>
-          <button onClick={toggleTheme} className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500 shadow-xl ${isDark ? 'bg-slate-800 text-yellow-400' : 'bg-white text-blue-950'}`}>
+          <button onClick={() => setIsDark(!isDark)} className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500 shadow-xl ${isDark ? 'bg-slate-800 text-yellow-400' : 'bg-white text-blue-950'}`}>
             {isDark ? '☼' : '☾'}
           </button>
         </div>
@@ -197,7 +196,7 @@ const App: React.FC = () => {
           <Reveal>
             <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 typewriter text-[22vw] font-black opacity-[0.015] select-none pointer-events-none ${isDark ? 'text-white' : 'text-blue-950'}`}>GALLERY</div>
             <h1 className={`handwriting text-[10vw] lg:text-[140px] mb-2 leading-none tracking-tighter ${isDark ? 'text-white' : 'text-blue-950'}`}>Wild Salt</h1>
-            <p className="typewriter text-[10px] md:text-xs tracking-[1em] uppercase opacity-40">Digital Ink Archive &bull; Est. 2025</p>
+            <p className={`typewriter text-[10px] md:text-xs tracking-[1em] uppercase font-bold ${isDark ? 'text-blue-200/60' : 'text-blue-900/60'}`}>Digital Ink Archive &bull; Est. 2025</p>
           </Reveal>
         </header>
 
@@ -210,7 +209,7 @@ const App: React.FC = () => {
               </div>
               <Reveal>
                 <h2 className={`handwriting text-6xl md:text-8xl mb-2 relative z-10 transition-colors ${isDark ? 'text-blue-100' : 'text-blue-950'}`}>{section.title}</h2>
-                <p className={`typewriter text-[10px] tracking-[0.6em] uppercase opacity-40 transition-colors ${isDark ? 'text-blue-400' : 'text-blue-900'}`}>{section.subtitle}</p>
+                <p className={`typewriter text-[10px] tracking-[0.6em] uppercase font-bold transition-colors ${isDark ? 'text-blue-400/80' : 'text-blue-900/80'}`}>{section.subtitle}</p>
                  <div className={`h-[2px] w-16 mx-auto mt-4 rounded-full bg-gradient-to-r from-transparent ${isDark ? 'via-blue-500' : 'via-blue-200'} to-transparent`} />
               </Reveal>
             </div>
@@ -233,22 +232,20 @@ const App: React.FC = () => {
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 md:p-12">
           <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-2xl" onClick={() => setSelectedArt(null)} />
           <div className={`relative w-full max-w-6xl h-full md:h-auto md:min-h-[600px] flex flex-col md:flex-row shadow-2xl overflow-hidden rounded-sm modal-enter-active ${isDark ? 'bg-slate-900' : 'bg-white'}`}>
-            <div className="flex-1 bg-black flex items-center justify-center p-12 overflow-hidden relative group">
-               {/* Close button for mobile inside image area */}
-               <button onClick={() => setSelectedArt(null)} className="absolute top-4 right-4 md:hidden text-white/50 border border-white/20 px-3 py-1 text-xs">CLOSE</button>
+            <div className={`flex-1 flex items-center justify-center overflow-hidden relative group ${isDark ? 'bg-black p-12' : 'bg-transparent p-0'}`}>
               <div className="scale-100 md:scale-125 transform transition-transform duration-1000 group-hover:scale-[1.3] group-hover:rotate-1">
                 {selectedArt.component}
               </div>
             </div>
-            <div className="w-full md:w-[400px] p-8 md:p-12 flex flex-col justify-between overflow-y-auto">
+            <div className="w-full md:w-[400px] p-8 md:p-12 flex flex-col justify-between overflow-y-auto max-h-[40vh] md:max-h-full bg-inherit">
               <div>
                 <button onClick={() => setSelectedArt(null)} className="hidden md:block mb-12 typewriter text-xs opacity-50 hover:opacity-100 transition-opacity">← Back to Gallery</button>
                 <h2 className={`handwriting text-5xl md:text-6xl mb-6 ${isDark ? 'text-blue-100' : 'text-blue-950'}`}>{selectedArt.title}</h2>
-                <p className={`typewriter text-sm leading-relaxed mb-12 opacity-60 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>{selectedArt.desc}</p>
+                <p className={`typewriter text-sm leading-relaxed mb-12 opacity-80 ${isDark ? 'text-slate-400' : 'text-slate-700'}`}>{selectedArt.desc}</p>
                 <div className="space-y-4">
                   <h4 className="typewriter text-[10px] uppercase tracking-widest border-b border-gray-100/10 pb-2 opacity-50">Technical Specs</h4>
                   <ul className="space-y-2">
-                    {selectedArt.specs.map(s => <li key={s} className="typewriter text-[9px] uppercase opacity-40 tracking-wider flex items-center gap-2"><span className="w-1 h-1 bg-current rounded-full"/> {s}</li>)}
+                    {selectedArt.specs.map(s => <li key={s} className="typewriter text-[9px] uppercase opacity-60 tracking-wider flex items-center gap-2"><span className="w-1 h-1 bg-current rounded-full"/> {s}</li>)}
                   </ul>
                 </div>
               </div>
@@ -295,7 +292,7 @@ const App: React.FC = () => {
 };
 
 // Helper for Footer Links
-const SocialLink = ({ href, label, children }: { href: string, label: string, children: React.ReactNode }) => (
+const SocialLink = ({ href, label, children }: { href: string, label: string, children?: React.ReactNode }) => (
     <a 
         href={href} 
         target="_blank" 
@@ -308,7 +305,7 @@ const SocialLink = ({ href, label, children }: { href: string, label: string, ch
     </a>
 );
 
-const GalleryItem = ({ children, title, desc, isDark, index }: { children: React.ReactNode, title: string, desc: string, isDark: boolean, index: number }) => {
+const GalleryItem = ({ children, title, desc, isDark, index }: { children?: React.ReactNode, title: string, desc: string, isDark: boolean, index: number }) => {
   const rotation = (index % 3 - 1.5) * 1.5;
   const mt = (index % 3) * 15; // Reduced staggered top margin (was 30)
 
