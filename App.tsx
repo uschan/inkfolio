@@ -90,23 +90,6 @@ const Reveal = ({ children, delay = 0 }: { children: React.ReactNode, delay?: nu
   );
 };
 
-const CustomCursor = ({ isDark }: { isDark: boolean }) => {
-  const cursorRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const move = (e: MouseEvent) => {
-      if (cursorRef.current) {
-        cursorRef.current.style.transform = `translate3d(${e.clientX - 16}px, ${e.clientY - 16}px, 0)`;
-      }
-    };
-    window.addEventListener('mousemove', move);
-    return () => window.removeEventListener('mousemove', move);
-  }, []);
-
-  return (
-    <div ref={cursorRef} className={`fixed top-0 left-0 w-8 h-8 rounded-full border pointer-events-none z-[9999] transition-colors duration-500 mix-blend-difference border-white`} />
-  );
-};
-
 // --- Main App ---
 const App: React.FC = () => {
   const [isDark, setIsDark] = useState(false);
@@ -114,7 +97,7 @@ const App: React.FC = () => {
   const [selectedArt, setSelectedArt] = useState<Artwork | null>(null);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 100);
+    const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -177,9 +160,7 @@ const App: React.FC = () => {
   ];
 
   return (
-    <div className={`min-h-screen transition-colors duration-1000 ${isDark ? 'bg-[#050b18] text-slate-300' : 'bg-[#f5f3ef] text-blue-950'} paper-texture font-sans cursor-none`}>
-      <CustomCursor isDark={isDark} />
-      
+    <div className={`min-h-screen transition-colors duration-1000 ${isDark ? 'bg-[#050b18] text-slate-300' : 'bg-[#f5f3ef] text-blue-950'} paper-texture font-sans`}>
       {/* Scroll Progress Timeline */}
       <aside className="fixed left-6 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col items-center gap-6 opacity-30 hover:opacity-100 transition-opacity">
         {series.map((s) => (
@@ -212,31 +193,31 @@ const App: React.FC = () => {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-10">
-        <header className="h-screen flex flex-col items-center justify-center text-center">
+        <header className="min-h-[50vh] flex flex-col items-center justify-center text-center pt-24 pb-12">
           <Reveal>
-            <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 typewriter text-[22vw] font-black opacity-[0.015] select-none ${isDark ? 'text-white' : 'text-blue-950'}`}>GALLERY</div>
-            <h1 className={`handwriting text-[14vw] mb-4 leading-none tracking-tighter ${isDark ? 'text-white' : 'text-blue-950'}`}>Wild Salt</h1>
-            <p className="typewriter text-xs tracking-[1em] uppercase opacity-40">Digital Ink Archive &bull; Est. 2025</p>
+            <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 typewriter text-[22vw] font-black opacity-[0.015] select-none pointer-events-none ${isDark ? 'text-white' : 'text-blue-950'}`}>GALLERY</div>
+            <h1 className={`handwriting text-[10vw] lg:text-[140px] mb-2 leading-none tracking-tighter ${isDark ? 'text-white' : 'text-blue-950'}`}>Wild Salt</h1>
+            <p className="typewriter text-[10px] md:text-xs tracking-[1em] uppercase opacity-40">Digital Ink Archive &bull; Est. 2025</p>
           </Reveal>
         </header>
 
         {/* Dynamic Series Rendering */}
         {series.map((section) => (
-          <section id={section.id} key={section.id} className="py-20 relative">
-            <div className="relative mb-40 text-center overflow-hidden">
+          <section id={section.id} key={section.id} className="py-10 relative">
+            <div className="relative mb-16 text-center overflow-hidden">
                <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 typewriter text-[15vw] font-black uppercase tracking-widest opacity-[0.03] select-none pointer-events-none whitespace-nowrap ${isDark ? 'text-blue-500' : 'text-blue-900'}`}>
                 {section.bgText}
               </div>
               <Reveal>
-                <h2 className={`handwriting text-7xl md:text-9xl mb-4 relative z-10 transition-colors ${isDark ? 'text-blue-100' : 'text-blue-950'}`}>{section.title}</h2>
-                <p className={`typewriter text-xs tracking-[0.8em] uppercase opacity-40 transition-colors ${isDark ? 'text-blue-400' : 'text-blue-900'}`}>{section.subtitle}</p>
-                 <div className={`h-[2px] w-24 mx-auto mt-12 rounded-full bg-gradient-to-r from-transparent ${isDark ? 'via-blue-500' : 'via-blue-200'} to-transparent`} />
+                <h2 className={`handwriting text-6xl md:text-8xl mb-2 relative z-10 transition-colors ${isDark ? 'text-blue-100' : 'text-blue-950'}`}>{section.title}</h2>
+                <p className={`typewriter text-[10px] tracking-[0.6em] uppercase opacity-40 transition-colors ${isDark ? 'text-blue-400' : 'text-blue-900'}`}>{section.subtitle}</p>
+                 <div className={`h-[2px] w-16 mx-auto mt-8 rounded-full bg-gradient-to-r from-transparent ${isDark ? 'via-blue-500' : 'via-blue-200'} to-transparent`} />
               </Reveal>
             </div>
             
-            <div className="columns-1 md:columns-2 lg:columns-3 gap-12">
+            <div className="columns-1 md:columns-2 lg:columns-3 gap-8">
               {allArt.slice(section.startIndex, section.endIndex).map((art, idx) => (
-                <div key={art.id} onClick={() => setSelectedArt(art)} className="break-inside-avoid mb-16 cursor-zoom-in">
+                <div key={art.id} onClick={() => setSelectedArt(art)} className="break-inside-avoid mb-12 cursor-zoom-in">
                   <GalleryItem index={idx} isDark={isDark} title={art.title} desc={art.desc}>
                     {art.component}
                   </GalleryItem>
@@ -280,17 +261,56 @@ const App: React.FC = () => {
         </div>
       )}
 
-      <footer className="py-40 border-t border-gray-100/10 text-center opacity-40">
-        <p className="handwriting text-4xl mb-6">@wildsalt_art</p>
-        <p className="typewriter text-[8px] uppercase tracking-[1em]">Hand-coded &bull; Procedural &bull; Eternal</p>
+      <footer className="py-20 border-t border-gray-100/10 text-center relative z-10">
+        <p className="handwriting text-4xl mb-4 opacity-40">@wildsalt_art</p>
+        <p className="typewriter text-[8px] uppercase tracking-[1em] mb-12 opacity-40">Hand-coded &bull; Procedural &bull; Eternal</p>
+        
+        {/* Social Links */}
+        <div className="flex flex-wrap justify-center gap-6 md:gap-8 px-4">
+            <SocialLink href="https://wildsalt.me/" label="Wild Salt">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+            </SocialLink>
+            <SocialLink href="https://x.com/uschan" label="X">
+                <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </SocialLink>
+            <SocialLink href="https://github.com/uschan" label="GitHub">
+                <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5"><path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" /></svg>
+            </SocialLink>
+            <SocialLink href="https://www.instagram.com/bujjun" label="Instagram">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </SocialLink>
+            <SocialLink href="https://bsky.app/profile/wildsalt.bsky.social" label="Bluesky">
+                <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5"><path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364.136-.02.275-.039.415-.056-.138.022-.276.04-.415.056-3.912.58-7.387 2.005-2.83 7.078 5.013 5.58 7.424-4.788 7.823-6.589.96 4.379 3.26 10.556 7.823 6.589 4.557-5.073 1.082-6.498-2.83-7.078-.139-.016-.277-.034-.415-.056.14.017.279.036.415.056 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-2.206-.659-.298-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8z"/></svg>
+            </SocialLink>
+            <SocialLink href="https://paypal.me/wildsaltme?utm_source=wildsalt.me" label="PayPal">
+                <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.946 5.05-4.336 6.797-9.147 6.797h-2.19c-.524 0-.964.382-1.046.9l-.738 4.632-.196 1.238c-.082.518-.522.9-.196 1.236z"/></svg>
+            </SocialLink>
+            <SocialLink href="https://discord.gg/26nJEhq6Yj" label="Discord">
+                <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037 13.46 13.46 0 0 0-.585 1.206C12.637 3.945 10.51 3.945 8.358 4.1c-.2.43-.404.834-.585 1.202a.073.073 0 0 0-.079-.037 19.797 19.797 0 0 0-4.885 1.515.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.118.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+            </SocialLink>
+        </div>
       </footer>
     </div>
   );
 };
 
+// Helper for Footer Links
+const SocialLink = ({ href, label, children }: { href: string, label: string, children: React.ReactNode }) => (
+    <a 
+        href={href} 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        className="opacity-40 hover:opacity-100 hover:text-blue-500 transition-all duration-300 flex items-center justify-center p-2"
+        aria-label={label}
+        title={label}
+    >
+        {children}
+    </a>
+);
+
 const GalleryItem = ({ children, title, desc, isDark, index }: { children: React.ReactNode, title: string, desc: string, isDark: boolean, index: number }) => {
   const rotation = (index % 3 - 1.5) * 1.5;
-  const mt = (index % 3) * 30; // Staggered top margin
+  const mt = (index % 3) * 15; // Reduced staggered top margin (was 30)
 
   return (
     <div className="group perspective-1000" style={{ marginTop: `${mt}px` }}>
