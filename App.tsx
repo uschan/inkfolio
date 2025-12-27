@@ -233,7 +233,7 @@ const App: React.FC = () => {
           <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-2xl" onClick={() => setSelectedArt(null)} />
           <div className={`relative w-full max-w-6xl max-h-full flex flex-col md:flex-row shadow-2xl overflow-hidden rounded-sm modal-enter-active ${isDark ? 'bg-slate-900' : 'bg-white'}`}>
             <div className={`relative w-full aspect-[3/4] md:aspect-auto md:flex-1 md:h-auto shrink-0 overflow-hidden flex items-center justify-center ${isDark ? 'bg-black p-0 md:p-12' : 'bg-transparent p-0'}`}>
-              <div className="w-full h-full md:w-auto md:h-auto md:scale-125 [&>div]:!w-full [&>div]:!h-full">
+              <div className="w-full h-full md:w-auto md:h-auto md:scale-125 max-md:[&>div]:!w-full max-md:[&>div]:!h-full">
                 {selectedArt.component}
               </div>
             </div>
@@ -243,7 +243,7 @@ const App: React.FC = () => {
                 <h2 className={`handwriting text-5xl md:text-6xl ${isDark ? 'text-blue-100' : 'text-blue-950'}`}>{selectedArt.title}</h2>
                 <p className={`typewriter text-sm leading-relaxed mb-8 opacity-50 ${isDark ? 'text-slate-400' : 'text-slate-700'}`}>{selectedArt.desc}</p>
                 <div className="space-y-4">
-                  <h4 className="typewriter text-[10px] uppercase tracking-widest border-b border-gray-100/10 opacity-100">Technical Specs</h4>
+                  <h4 className="typewriter text-[10px] uppercase tracking-widest opacity-100">Technical Specs</h4>
                   <ul className="space-y-2">
                     {selectedArt.specs.map(s => <li key={s} className="typewriter text-[9px] uppercase opacity-60 tracking-wider flex items-center gap-2"><span className="w-1 h-1 bg-current rounded-full"/> {s}</li>)}
                   </ul>
