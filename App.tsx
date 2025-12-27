@@ -172,7 +172,7 @@ const App: React.FC = () => {
       </aside>
 
       {/* Navigation */}
-      <nav className={`fixed top-0 w-full z-50 transition-all duration-700 ${scrolled ? 'py-4 backdrop-blur-xl border-b' : 'py-8'} ${isDark ? 'border-slate-800 bg-slate-950/40' : 'border-gray-200/50 bg-white/40'}`}>
+      <nav className={`fixed top-0 w-full z-50 transition-all duration-700 ${scrolled ? 'py-4 backdrop-blur-xl border-b' : 'py-6'} ${isDark ? 'border-slate-800 bg-slate-950/40' : 'border-gray-200/50 bg-white/40'}`}>
         <div className="max-w-7xl mx-auto px-10 flex items-center justify-between">
           <div className="flex items-center gap-4 group cursor-pointer" onClick={() => window.scrollTo(0, 0)}>
             <div className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all group-hover:rotate-180 ${isDark ? 'border-blue-500 text-blue-400' : 'border-blue-900 text-blue-900'}`}>
@@ -193,7 +193,7 @@ const App: React.FC = () => {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-10">
-        <header className="min-h-[50vh] flex flex-col items-center justify-center text-center pt-24 pb-12">
+        <header className="min-h-[30vh] flex flex-col items-center justify-center text-center pt-20 pb-6">
           <Reveal>
             <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 typewriter text-[22vw] font-black opacity-[0.015] select-none pointer-events-none ${isDark ? 'text-white' : 'text-blue-950'}`}>GALLERY</div>
             <h1 className={`handwriting text-[10vw] lg:text-[140px] mb-2 leading-none tracking-tighter ${isDark ? 'text-white' : 'text-blue-950'}`}>Wild Salt</h1>
@@ -203,21 +203,21 @@ const App: React.FC = () => {
 
         {/* Dynamic Series Rendering */}
         {series.map((section) => (
-          <section id={section.id} key={section.id} className="py-10 relative">
-            <div className="relative mb-16 text-center overflow-hidden">
+          <section id={section.id} key={section.id} className="py-8 relative">
+            <div className="relative mb-8 text-center overflow-hidden">
                <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 typewriter text-[15vw] font-black uppercase tracking-widest opacity-[0.03] select-none pointer-events-none whitespace-nowrap ${isDark ? 'text-blue-500' : 'text-blue-900'}`}>
                 {section.bgText}
               </div>
               <Reveal>
                 <h2 className={`handwriting text-6xl md:text-8xl mb-2 relative z-10 transition-colors ${isDark ? 'text-blue-100' : 'text-blue-950'}`}>{section.title}</h2>
                 <p className={`typewriter text-[10px] tracking-[0.6em] uppercase opacity-40 transition-colors ${isDark ? 'text-blue-400' : 'text-blue-900'}`}>{section.subtitle}</p>
-                 <div className={`h-[2px] w-16 mx-auto mt-8 rounded-full bg-gradient-to-r from-transparent ${isDark ? 'via-blue-500' : 'via-blue-200'} to-transparent`} />
+                 <div className={`h-[2px] w-16 mx-auto mt-4 rounded-full bg-gradient-to-r from-transparent ${isDark ? 'via-blue-500' : 'via-blue-200'} to-transparent`} />
               </Reveal>
             </div>
             
             <div className="columns-1 md:columns-2 lg:columns-3 gap-8">
               {allArt.slice(section.startIndex, section.endIndex).map((art, idx) => (
-                <div key={art.id} onClick={() => setSelectedArt(art)} className="break-inside-avoid mb-12 cursor-zoom-in">
+                <div key={art.id} onClick={() => setSelectedArt(art)} className="break-inside-avoid mb-8 cursor-zoom-in">
                   <GalleryItem index={idx} isDark={isDark} title={art.title} desc={art.desc}>
                     {art.component}
                   </GalleryItem>
@@ -261,9 +261,9 @@ const App: React.FC = () => {
         </div>
       )}
 
-      <footer className="py-20 border-t border-gray-100/10 text-center relative z-10">
+      <footer className="py-12 border-t border-gray-100/10 text-center relative z-10">
         <p className="handwriting text-4xl mb-4 opacity-40">@wildsalt_art</p>
-        <p className="typewriter text-[8px] uppercase tracking-[1em] mb-12 opacity-40">Hand-coded &bull; Procedural &bull; Eternal</p>
+        <p className="typewriter text-[8px] uppercase tracking-[1em] mb-8 opacity-40">Hand-coded &bull; Procedural &bull; Eternal</p>
         
         {/* Social Links */}
         <div className="flex flex-wrap justify-center gap-6 md:gap-8 px-4">
