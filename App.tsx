@@ -46,6 +46,7 @@ import VoidBloom from './components/sketches/VoidBloom';
 import MoltenCore from './components/sketches/MoltenCore';
 import FractalCoast from './components/sketches/FractalCoast';
 import GlitchGarden from './components/sketches/GlitchGarden';
+import CssAttachment from './components/sketches/CssAttachment';
 
 // --- Types ---
 interface Artwork {
@@ -120,7 +121,7 @@ const App: React.FC = () => {
 
   const allArt: Artwork[] = [
     // Series 4
-    { id: 0, title: "Nebula Loom", desc: "A celestial weave of sub-pixel lines.", component: <NebulaLoom />, specs: ["Linear Hatching", "Mix-blend Mode", "Sub-pixel Rendering"] },
+    { id: 0, title: "The Attachment", desc: "Pure CSS Iconography.", component: <CssAttachment />, specs: ["Clip-path Geometry", "Linear Gradients", "Box Model"] },
     { id: 1, title: "Caustic Depths", desc: "Underwater light simulation.", component: <CausticDepths />, specs: ["Overlay Gradients", "CSS Masking", "Procedural Caustics"] },
     { id: 2, title: "Cyber Zen", desc: "Neon minimalism.", component: <CyberZen />, specs: ["Neon Effects", "Carbon Wash", "Geometric Contrast"] },
     { id: 3, title: "Petal Storm", desc: "Dynamic pointillism.", component: <PetalStorm />, specs: ["400 Particles", "Transform-GPU", "Chaos Theory"] },
