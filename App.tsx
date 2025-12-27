@@ -263,7 +263,7 @@ const App: React.FC = () => {
         <p className="typewriter text-[8px] uppercase tracking-[1em] mb-8 opacity-40">Hand-coded &bull; Procedural &bull; Eternal</p>
         
         {/* Social Links */}
-        <div className="flex flex-wrap justify-center gap-6 md:gap-8 px-4">
+        <div className="flex flex-wrap justify-center gap-4 md:gap-8 px-4">
             <SocialLink href="https://wildsalt.me/" label="Wild Salt">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
             </SocialLink>
